@@ -77,7 +77,7 @@ GND | GND
 ### Conectando RING LED con esp32
 RING LED | ESP32
 --- | ---
-IN | 34
+IN | 25
 VCC | 5V
 GND | GND
 
