@@ -17,7 +17,7 @@
 
 <br />
 
-## Instalación ESP32 en Arduino IDe
+## Instalación ESP32 en Arduino IDE
 Para poder instalar nuestra tarjeta ESP32 en Arduino IDE, necesitamos seguir los siguientes pasos:
 
 1. Teniendo abierto nuestro Arduino IDE, vamos a __*File > Preferences*__
