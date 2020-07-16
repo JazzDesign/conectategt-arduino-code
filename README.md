@@ -56,11 +56,14 @@ https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com
   <img src="/imagenes/installation-verification.png">
 </p>
 
-A continuación se explica los pines y código utilizado para poder enviar datos desde nuestro dispositivo a nuestro dashboard creado con Node-Red (puedes encontrar más información de Node-RED ingresando al <a href="https://nodered.org/" target="_blank"> Sitio oficial Node-RED<a />.
 
 <br />
 
 ## Pines a utilizar
+A continuación se explica los pines y código utilizado para poder enviar datos desde nuestro dispositivo a nuestro dashboard creado con Node-Red (puedes encontrar más información de Node-RED ingresando al <a href="https://nodered.org/" target="_blank"> Sitio oficial Node-RED<a />.
+<p align="center">
+  <img src="/imagenes/esp32-pinout.jpg">
+</p>
 
 ### Conectando sensor BMP180 con esp32
 BMP180 | ESP32
