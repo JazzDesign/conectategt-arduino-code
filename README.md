@@ -27,7 +27,7 @@ Para poder instalar nuestra tarjeta ESP32 en Arduino IDE, necesitamos seguir los
 
 2. Debemos de ingrear lo siguiente: __*https://dl.espressif.com/dl/package_esp32_index.json*__ dentro del cuadro que dice *Additional Board Manager URLs* como se muestra en la siguiente figura, luego dar click en el botón de *OK*
 <p align="center">
-  <img  src="/imagenes/arduino-ide-open-preferences.png">
+  <img  src="/imagenes/preferences.png">
 </p>
 
 __Nota:__ Si ya tienes algún link en este campo, puedes agregar el que te indicamos separandolo por una coma, como se muestra a continuación.
