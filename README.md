@@ -13,7 +13,11 @@
 1. Arduino IDE - Puedes descargar el IDE <a href="https://www.arduino.cc/en/Main/Software" target="_blank">aquí <a/>
 2. Libreria BMP085 Adafruit - Puedes descargarla <a href="https://learn.adafruit.com/bmp085/using-the-bmp085-api-v2" target="_blank">aquí <a/>
 3. Libreria NeoPixel Adafruit - Puedes descargarla <a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino-library-installation" target="_blank">aquí <a/>
-4. Entender como funciona MQTT, puedes entender más ingresando <a href="https://randomnerdtutorials.com/what-is-mqtt-and-how-it-works/" target="_blank">aquí <a/>
+4. Libreria PubSubClient - Puedes encontrarla en el manejador de librerias de Arduino
+  <p align="center">
+    <img  src="/imagenes/pubsubclient.png">
+  </p>
+5. Entender como funciona MQTT, puedes entender más ingresando <a href="https://randomnerdtutorials.com/what-is-mqtt-and-how-it-works/" target="_blank">aquí <a/>
 
 <br />
 
