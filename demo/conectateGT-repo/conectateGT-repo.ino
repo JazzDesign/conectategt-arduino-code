@@ -10,7 +10,7 @@
 #include <Adafruit_NeoPixel.h>
 
 // Constandes de conexión - Modificar al nombre que se te indique.
-#define TEAM_NAME "node1"
+#define TEAM_NAME "nodeyc"
 //////////////////////////////////////////////////////////////////
 
 /*////////////////////////////////////////
@@ -29,8 +29,8 @@ const char* mqtt_server = "galiot.galileo.edu";
 /*//////////////////////////////////////
  * Modificar con los datos de tu WiFi 
  */
-const char* ssid = "Nombre de tu internet";
-const char* password = "Clave de tu internet";
+const char* ssid = "electronica-n";
+const char* password = "elec2012";
 ////////////////////////////////////////
 
 
