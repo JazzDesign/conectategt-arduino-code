@@ -7,6 +7,7 @@
 #include <PubSubClient.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
+#include <Adafruit_NeoPixel.h>
 
 // Constandes de conexión - Modificar al nombre que se te indique.
 #define TEAM_NAME "node1"
@@ -18,19 +19,32 @@
 #define PUBLISH_PERIOD 60000
 Adafruit_BMP085 bmp;
 const char* mqtt_server = "galiot.galileo.edu";
+
+#ifdef __AVR__
+ #include <avr/power.h> // Requerido para 16 MHz Adafruit Trinket
+#endif
 //////////////////////////////////////////
 
 
 /*//////////////////////////////////////
  * Modificar con los datos de tu WiFi 
  */
-const char* ssid = "CLARO_0CA774";
-const char* password = "86A2f47C92";
+const char* ssid = "Nombre de tu internet";
+const char* password = "Clave de tu internet";
 ////////////////////////////////////////
 
 
-// Constantes
-#define RING_PIN 25
+
+// ¿En cuál pin conectamos nuestro RING NeoPixels?
+#define PIN        25 
+
+// ¿Cuántos NeoPixels estan conectados?
+#define NUMPIXELS 16 // NeoPixel RING tamaño regular
+int brightness = 150; // Brillo de 0 a 255
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+#define DELAYVAL 500 // Tiempo (en milisegundos) para encender cada pixels
 
 //Variables
 int red=0;
@@ -76,7 +90,14 @@ void setupMQTT() {
 
 
 void setup() {
-  // put your setup code here, to run once:
+
+    #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+      clock_prescale_set(clock_div_1);
+    #endif
+    pixels.begin(); // Inicializamos el objeto Pixels (REQUERIDO)
+    pixels.setBrightness(brightness);
+    pixels.clear(); // Colocamos todos los pixels en 'off'
+
     Serial.begin(115200);
     setupMQTT();
     if (!bmp.begin()) {
@@ -98,40 +119,41 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(msg_r);
   Serial.println("'");
   if (strcmp("ON", msg_r) == 0) {
-    Serial.println("SE MANDO");
-//    Serial.println("LED ON");
-//    digitalWrite(LED_PIN, HIGH);
+    Serial.println("SE MANDO ON");
   } else if(strcmp("OFF", msg_r) == 0) {
-//    Serial.println("LED OFF");
-//    digitalWrite(LED_PIN, LOW);
+    Serial.println("SE MANDO OFF");
   }else{
-//    colorConverter(msg_r);
+    colorConverter(msg_r);
   }
 }
 
-//void colorConverter(String hexValue)
-//{
-//    int number = (int) strtol( &hexValue[1], NULL, 16);
-//    int r = number >> 16;
-//    int g = number >> 8 & 0xFF;
-//    int b = number & 0xFF;
-//
-//    Serial.print("red is ");
-//    Serial.println(r);
-//    Serial.print("green is ");
-//    Serial.println(g);
-//    Serial.print("blue is ");
-//    Serial.println(b);
-//    setColor((r+50), g, b);
-//
-//}
-//
-//void setColor(int red, int green, int blue)
-//{
-//  analogWrite(redPin, red);
-//  analogWrite(greenPin, green);
-//  analogWrite(bluePin, blue);  
-//}
+void colorConverter(String hexValue)
+{
+    int number = (int) strtol( &hexValue[1], NULL, 16);
+    int r = number >> 16;
+    int g = number >> 8 & 0xFF;
+    int b = number & 0xFF;
+
+    Serial.print("red is ");
+    Serial.println(r);
+    Serial.print("green is ");
+    Serial.println(g);
+    Serial.print("blue is ");
+    Serial.println(b);
+
+     pixels.clear(); // Colocamos todos los pixels en 'off'
+
+    for(int i=0; i<NUMPIXELS; i++) { // Para cada pixel...
+  
+      // pixels.Color() toma valores RGB, de 0,0,0 hasta 255,255,255
+      // Para este ejemplo solo estamos usando el color verde.
+      pixels.setPixelColor(i, pixels.Color((r+50), g, b));
+    }
+      pixels.show();   // Mandamos el update del color al hardware.
+  
+      delay(DELAYVAL); // Esperamos un tiempo para regresar al loop.
+
+}
 
 void reconnect() {
   // Loop until we're reconnected
@@ -140,7 +162,6 @@ void reconnect() {
     // Attempt to connect
     if (mqtt_client.connect("node1/btn" )) {
       Serial.println("connected");
-      mqtt_client.subscribe(getTopic("btn"));
       mqtt_client.subscribe(getTopic("rgb"));
     }else {
       Serial.print("failed, rc=");
@@ -176,27 +197,6 @@ void loop() {
     Serial.print(bmp.readTemperature());
     Serial.println(" *C");
     
-//    Serial.print("Pressure = ");
-//    Serial.print(bmp.readPressure());
-//    Serial.println(" Pa");
-//    
-//    // Calculate altitude assuming 'standard' barometric
-//    // pressure of 1013.25 millibar = 101325 Pascal
-//    Serial.print("Altitude = ");
-//    Serial.print(bmp.readAltitude());
-//    Serial.println(" meters");
-//
-//    Serial.print("Pressure at sealevel (calculated) = ");
-//    Serial.print(bmp.readSealevelPressure());
-//    Serial.println(" Pa");
-//
-//  // you can get a more precise measurement of altitude
-//  // if you know the current sea level pressure which will
-//  // vary with weather and such. If it is 1015 millibars
-//  // that is equal to 101500 Pascals.
-//    Serial.print("Real altitude = ");
-//    Serial.print(bmp.readAltitude(101500));
-//    Serial.println(" meters");
     
     Serial.println();
     delay(50);
@@ -206,8 +206,8 @@ void loop() {
     mqtt_client.publish(getTopic("temp"), msg);     
 
 
-    String str2(bmp.readSealevelPressure());
-    str2.toCharArray(msg1, 50);
-    mqtt_client.publish(getTopic("press"), msg1);
+//    String str2(bmp.readSealevelPressure());
+//    str2.toCharArray(msg1, 50);
+//    mqtt_client.publish(getTopic("press"), msg1);
   }
 }
