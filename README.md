@@ -81,3 +81,50 @@ IN | 25
 VCC | 5V
 GND | GND
 
+## Código ESP32
+
+2. Lo que debemos de cambiar en nuestro código es lo siguiente:
+
+```
+// Constandes de conexión - Modificar al nombre que se te indique.
+  #define TEAM_NAME "node1"
+//////////////////////////////////////////////////////////////////
+```
+En donde sustituimos lo que esta como __*node1*__ por lo que se te indique en la charla.
+
+3. Verificamos que la dirección de nuestro servidor (para esta demostración) sea __galiot.galileo.edu__
+```
+const char* mqtt_server = "galiot.galileo.edu";
+```
+
+4. Ingresamos los datos de nuestra conexión a Wi-Fi
+```
+/*//////////////////////////////////////
+ * Modificar con los datos de tu WiFi 
+ */
+const char* ssid = "Nombre de tu internet";
+const char* password = "Clave de tu internet";
+////////////////////////////////////////
+```
+aquí debemos de colocar el nombre de nuestro internet y el password.
+
+5. Verificamos __PIN. Número de Pixels y brillo__ de nuestro RING LED o LED STRIP
+```
+
+// ¿En cuál pin conectamos nuestro RING NeoPixels?
+#define PIN        25 
+
+// ¿Cuántos NeoPixels estan conectados?
+#define NUMPIXELS 16 // NeoPixel RING tamaño regular
+int brightness = 150; // Brillo de 0 a 255
+```
+6. Seleccionamos nuestra tarjeta __ESP32__ y el __PUERTO__ correcto
+<p align="center">
+  <img src="/imagenes/installation-verification.png">
+</p>
+
+Luego de verificar podemos darle a __*SUBIR / UPLOAD*__ a nuestro código.
+
+7. Abrimos nuestro monitor serial y nos aseguramos de tener el baudaje en __115200__
+
+
